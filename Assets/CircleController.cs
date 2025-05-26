@@ -24,6 +24,14 @@ public class CircleController : MonoBehaviour
             {
                 // destroy the circle that is closer to the origin point
                 Destroy(other.gameObject);
+
+                // increase the score
+                GameManager gameManager = FindFirstObjectByType<GameManager>();
+                if (gameManager != null)
+                {
+                    gameManager.AddScore(1);
+                }
+
                 this.transform.localScale += new Vector3(scaleStep, scaleStep, 0);
                 // change the color of this circle to a new color according to the scale
                 float scale = this.transform.localScale.x;
