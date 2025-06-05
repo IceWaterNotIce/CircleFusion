@@ -1,9 +1,9 @@
 const cacheName = "Ice Water Not Ice-Circle Fusion-1.0";
 const contentToCache = [
-    "Build/web.loader.js",
-    "Build/web.framework.js.br",
-    "Build/web.data.br",
-    "Build/web.wasm.br",
+    "Build/b641055c1cbec3eb82d4479e86e21074.loader.js",
+    "Build/8b217a5d8d7b643193141afc99a1bda0.framework.js",
+    "Build/9e5925983dbd861a3737e66a20fd4751.data",
+    "Build/564448354e867e5fbf4ab08475da2c67.wasm",
     "TemplateData/style.css"
 
 ];
