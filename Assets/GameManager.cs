@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public float spawnMinX; // 生成圓圈的最小 x
     public float spawnMaxX; // 生成圓圈的最大 x
 
+    public int spawnMaxSize = 3; // 圓圈生成的最大大小
+
     private List<GameObject> circles = new List<GameObject>();
     private bool isGameOver = false;
 
@@ -30,19 +32,11 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver) return;
 
-
-
         // get user mouse input
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (circlePrefab != null)
-            {
-                float clampedX = Mathf.Clamp(mousePosition.x, spawnMinX, spawnMaxX);
-                Vector3 spawnPos = new Vector3(clampedX, spawnY, 0);
-                GameObject circle = Instantiate(circlePrefab, spawnPos, Quaternion.identity);
-                circles.Add(circle);
-            }
+            CreateCircle(mousePosition);
         }
 
         // 檢查所有圓圈的 y 座標
@@ -57,7 +51,21 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    private void CreateCircle(Vector2 mousePosition)
+    {
+        if (circlePrefab != null)
+        {
+            float clampedX = Mathf.Clamp(mousePosition.x, spawnMinX, spawnMaxX);
+            Vector3 spawnPos = new Vector3(clampedX, spawnY, 0);
+            GameObject circle = Instantiate(circlePrefab, spawnPos, Quaternion.identity);
 
+            // 隨機大小 int
+            int randomSize = UnityEngine.Random.Range(1, spawnMaxSize + 1);
+            circle.transform.localScale = new Vector3(randomSize, randomSize, 1);
+
+            circles.Add(circle);
+        }
+    }
     // 在 Scene 視窗繪製 loseY 線
     void OnDrawGizmos()
     {
