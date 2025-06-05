@@ -25,8 +25,8 @@ jobs:
           # Delete all existing files in web
           rm -rf *
           # Copy new files from main
-          git checkout main -- Builds/Web/*
-          mv Builds/Web/* . 
+          git checkout main -- Builds/web/*
+          mv Builds/web/* . 
           git add -A
           git commit -m "Update WebGL build from main"
           git push origin web
