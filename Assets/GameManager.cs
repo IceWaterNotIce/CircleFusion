@@ -91,10 +91,9 @@ public class GameManager : MonoBehaviour
             Rigidbody2D rb = CurrentCircle.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.gravityScale = 1; // 啟用重力
+                rb.gravityScale = 5; // 啟用重力
             }
-            CurrentCircle.AddComponent<CircleController>(); // 添加控制器組件
-            CurrentCircle.GetComponent<CircleController>().scaleStep = 0.5f; // 設置 scaleStep
+            CurrentCircle.GetComponent<CircleCollider2D>().enabled = true; // 啟用碰撞器
             CurrentCircle = null; // 清除當前圓圈
         }
 

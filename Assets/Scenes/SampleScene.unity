@@ -164,10 +164,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circlePrefab: {fileID: 3609333638009170865, guid: c7aea4c50d7d11048a55e40f983785d2, type: 3}
-  loseY: 4.5
+  loseY: 5
   spawnY: 4
   spawnMinX: -5
   spawnMaxX: 4
+  spawnMaxSize: 3
+  score: 0
+  CurrentCircle: {fileID: 0}
 --- !u!1 &280445651
 GameObject:
   m_ObjectHideFlags: 0
