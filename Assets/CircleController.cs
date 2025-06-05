@@ -31,7 +31,7 @@ public class CircleController : MonoBehaviour
                 GameManager gameManager = FindFirstObjectByType<GameManager>();
                 if (gameManager != null)
                 {
-                    gameManager.AddScore((int)(100f * this.transform.localScale.x)); // increase score by 100 times the scale
+                    gameManager.AddScore((int)(100f * this.transform.localScale.x * this.transform.localScale.x)); // increase score by 100 times the scale
                 }
 
                 this.transform.localScale += new Vector3(GameManager.Instance.scaleStep, GameManager.Instance.scaleStep, 0);
