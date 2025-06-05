@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 circlePos = CurrentCircle.transform.position;
             // 限制 x 在 spawnMinX 和 spawnMaxX 之間
-            circlePos.x = Mathf.Clamp(mouseWorldPos.x, spawnMinX, spawnMaxX);
+            circlePos.x = Mathf.Clamp(mouseWorldPos.x, spawnMinX + CurrentCircle.transform.localScale.x / 2, spawnMaxX - CurrentCircle.transform.localScale.x / 2);
             CurrentCircle.transform.position = circlePos;
         }
 
@@ -93,8 +93,11 @@ public class GameManager : MonoBehaviour
             {
                 rb.gravityScale = 1; // 啟用重力
             }
+            CurrentCircle.AddComponent<CircleController>(); // 添加控制器組件
+            CurrentCircle.GetComponent<CircleController>().scaleStep = 0.5f; // 設置 scaleStep
+            CurrentCircle = null; // 清除當前圓圈
         }
-        CurrentCircle = null; // 清除當前圓圈
+
     }
 
     // 在 Scene 視窗繪製 loseY 線
