@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System; // 新增
+using System;
+using UnityEngine.InputSystem; // 新增
 
 public class GameManager : MonoBehaviour
 {
@@ -21,10 +22,12 @@ public class GameManager : MonoBehaviour
 
     public int score = 0; // 分數
 
+    public GameObject CurrentCircle; // 當前圓圈
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        CreateCircle(new Vector2(0, spawnY)); // 初始生成一個圓圈
     }
 
     // Update is called once per frame
@@ -36,8 +39,18 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            CreateCircle(mousePosition);
+            DropCircle(); // 釋放當前圓圈
+            StartCoroutine(WaitAndCreateCircle(mousePosition)); // 使用協程等待後生成新圓圈
         }
+
+        if (CurrentCircle != null)
+        {
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 circlePos = CurrentCircle.transform.position;
+            circlePos.x = mouseWorldPos.x;
+            CurrentCircle.transform.position = circlePos;
+        }
+
 
         // 檢查所有圓圈的 y 座標
         foreach (var circle in circles)
@@ -62,14 +75,39 @@ public class GameManager : MonoBehaviour
             // 隨機大小 int
             int randomSize = UnityEngine.Random.Range(1, spawnMaxSize + 1);
             circle.transform.localScale = new Vector3(randomSize, randomSize, 1);
-
+            circle.GetComponent<Rigidbody2D>().gravityScale = 0;
             circles.Add(circle);
+
+            CurrentCircle = circle; // 設置當前圓圈為新生成的圓圈
         }
+
+
     }
+
+    private void DropCircle()
+    {
+        if (CurrentCircle != null)
+        {
+            Rigidbody2D rb = CurrentCircle.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.gravityScale = 1; // 啟用重力
+            }
+        }
+        CurrentCircle = null; // 清除當前圓圈
+    }
+
+    // 在 Scene 視窗繪製 loseY 線
+    // 協程：等待一段時間後生成新圓圈
+    private System.Collections.IEnumerator WaitAndCreateCircle(Vector2 mousePosition)
+    {
+        yield return new WaitForSeconds(1f);
+        CreateCircle(mousePosition);
+    }
+
     // 在 Scene 視窗繪製 loseY 線
     void OnDrawGizmos()
     {
-        // loseY 線
         Gizmos.color = Color.red;
         float xMin = -100f;
         float xMax = 100f;
