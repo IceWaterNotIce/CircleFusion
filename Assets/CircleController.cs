@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class CircleController : MonoBehaviour
 {
-    public float scaleStep = 0.1f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,10 +31,10 @@ public class CircleController : MonoBehaviour
                 GameManager gameManager = FindFirstObjectByType<GameManager>();
                 if (gameManager != null)
                 {
-                    gameManager.AddScore(1);
+                    gameManager.AddScore((int)(100f * this.transform.localScale.x)); // increase score by 100 times the scale
                 }
 
-                this.transform.localScale += new Vector3(scaleStep, scaleStep, 0);
+                this.transform.localScale += new Vector3(GameManager.Instance.scaleStep, GameManager.Instance.scaleStep, 0);
                 // change the color of this circle to a new color according to the scale
                 float scale = this.transform.localScale.x;
                 float colorValue = Mathf.Clamp01(scale / 5f); // assuming max scale is 5

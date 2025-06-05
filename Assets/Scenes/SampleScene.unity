@@ -168,7 +168,8 @@ MonoBehaviour:
   spawnY: 4
   spawnMinX: -5
   spawnMaxX: 4
-  spawnMaxSize: 3
+  spawnMaxScaleStepNum: 3
+  scaleStep: 0.5
   score: 0
   CurrentCircle: {fileID: 0}
 --- !u!1 &280445651
