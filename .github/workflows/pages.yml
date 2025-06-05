@@ -1,4 +1,4 @@
-name: Copy Build web to gh-pages
+name: Copy WebGL build to web branch
 
 on:
   push:
@@ -18,15 +18,15 @@ jobs:
           git config --global user.name "IceWaterNotIce"
           git config --global user.email "icewaternotice@gmail.com"
 
-      - name: Copy web to gh-pages branch
+      - name: Copy WebGL build to web branch
         run: |
           git fetch
-          git checkout gh-pages
-          # Delete all existing files in gh-pages
+          git checkout web
+          # Delete all existing files in web
           rm -rf *
           # Copy new files from main
           git checkout main -- Builds/Web/*
           mv Builds/Web/* . 
           git add -A
-          git commit -m "Update docs from main"
-          git push origin gh-pages
+          git commit -m "Update WebGL build from main"
+          git push origin web
