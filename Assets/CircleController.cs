@@ -6,7 +6,10 @@ public class CircleController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        // change the color of this circle to a new color according to the scale
+        float scale = this.transform.localScale.x;
+        float colorValue = Mathf.Clamp01(scale / 5f); // assuming max scale is 5
+        GetComponent<SpriteRenderer>().color = new Color(colorValue, 0.5f, 1 - colorValue, 1); // RGB color based on scale
     }
 
     // Update is called once per frame
