@@ -76,13 +76,13 @@ public class GameManager : MonoBehaviour
 
         // 取得攝影機可見範圍
         Camera cam = Camera.main;
-        if (cam != null)
-        {
-            Vector3 camLeft = cam.ViewportToWorldPoint(new Vector3(0, 0.5f, Mathf.Abs(cam.transform.position.z)));
-            Vector3 camRight = cam.ViewportToWorldPoint(new Vector3(1, 0.5f, Mathf.Abs(cam.transform.position.z)));
-            xMin = camLeft.x;
-            xMax = camRight.x;
-        }
+        Vector3 camLeft = cam.ViewportToWorldPoint(new Vector3(0, 0.5f, Mathf.Abs(cam.transform.position.z)));
+        Vector3 camRight = cam.ViewportToWorldPoint(new Vector3(1, 0.5f, Mathf.Abs(cam.transform.position.z)));
+        Vector3 camTop = cam.ViewportToWorldPoint(new Vector3(0.5f, 1, Mathf.Abs(cam.transform.position.z)));
+        Vector3 camBottom = cam.ViewportToWorldPoint(new Vector3(0.5f, 0, Mathf.Abs(cam.transform.position.z)));
+        xMin = camLeft.x;
+        xMax = camRight.x;
+
 
         Vector3 start = new Vector3(xMin, loseY, 0);
         Vector3 end = new Vector3(xMax, loseY, 0);
@@ -96,8 +96,8 @@ public class GameManager : MonoBehaviour
 
         // spawnMinX 與 spawnMaxX 豎線
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(new Vector3(spawnMinX, spawnY - 10, 0), new Vector3(spawnMinX, spawnY + 10, 0));
-        Gizmos.DrawLine(new Vector3(spawnMaxX, spawnY - 10, 0), new Vector3(spawnMaxX, spawnY + 10, 0));
+        Gizmos.DrawLine(new Vector3(spawnMinX, camTop.y, 0), new Vector3(spawnMinX, camBottom.y, 0));
+        Gizmos.DrawLine(new Vector3(spawnMaxX, camTop.y, 0), new Vector3(spawnMaxX, camBottom.y, 0));
 
         // 標示 loseY 線、spawnY 線、spawnMinX、spawnMaxX
 #if UNITY_EDITOR
