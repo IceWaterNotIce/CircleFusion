@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 
 
       - name: Set up Git
         run: |
@@ -20,13 +22,19 @@ jobs:
 
       - name: Copy WebGL build to web branch
         run: |
-          git fetch
+          git fetch origin web:web  
           git checkout web
-          # Delete all existing files in web
-          rm -rf *
-          # Copy new files from main
-          git checkout main -- Builds/web/*
-          mv Builds/web/* . 
+          # 刪除現有文件（保留 .git 資料夾）
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+          # 從 main 分支複製所有必要文件
+          git checkout main -- Builds/web Build TemplateData
+          # 移動文件到根目錄
+          mv Builds/web/* .
+          # 確保資料夾結構正確
+          mkdir -p Build TemplateData
+          mv Builds/web/Build/* Build/
+          mv Builds/web/TemplateData/* TemplateData/
+          # 提交並推送
           git add -A
-          git commit -m "Update WebGL build from main"
+          git commit -m "Update WebGL build (incl. Build & TemplateData)"
           git push origin web
