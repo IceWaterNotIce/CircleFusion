@@ -47,10 +47,10 @@ public class GameManager : MonoBehaviour
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 circlePos = CurrentCircle.transform.position;
-            circlePos.x = mouseWorldPos.x;
+            // 限制 x 在 spawnMinX 和 spawnMaxX 之間
+            circlePos.x = Mathf.Clamp(mouseWorldPos.x, spawnMinX, spawnMaxX);
             CurrentCircle.transform.position = circlePos;
         }
-
 
         // 檢查所有圓圈的 y 座標
         foreach (var circle in circles)
